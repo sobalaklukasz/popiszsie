@@ -15,7 +15,7 @@ import javax.sql.DataSource;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
-public class ApplicationTests {
+public class SmokeApplicationTests {
 
     @Autowired
     EntityManagerFactory entityManagerFactory;

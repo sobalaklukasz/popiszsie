@@ -1,11 +1,11 @@
 package pl.popiszsie.config;
 
-import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -22,18 +22,18 @@ import java.util.Properties;
 @PropertySource("classpath:database.properties")
 public class DatabaseConfiguration {
 
-    private @Value("${database.user}") String user;
-    private @Value("${database.password}") String password;
-    private @Value("${database.url}") String url;
-    private @Value("${database.port}") int port;
+    private @Value("${database.user}")
+    String user;
+    private @Value("${database.password}")
+    String password;
 
-    @Bean
     public DataSource dataSource() {
-        MysqlDataSource dataSource = new MysqlDataSource();
-        dataSource.setUser(user);
-        dataSource.setPassword(password);
-        dataSource.setUrl(url);
-        dataSource.setPort(port);
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName("org.h2.Driver");
+        dataSource.setUrl("jdbc:h2:mem:db;DB_CLOSE_DELAY=-1");
+        dataSource.setUsername("user");
+        dataSource.setPassword("password");
+
         return dataSource;
     }
 
